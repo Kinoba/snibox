@@ -9,7 +9,13 @@
     </div>
 
     <div class="main">
-      <snippet-show v-if="showSnippet == 'show'"></snippet-show>
+      <!-- <div
+        v-for="(snippet, index) in [1, 2, 3]"
+        :key="index"
+      > -->
+        <snippet-show v-if="showSnippet == 'show'"></snippet-show>
+      <!-- </div> -->
+
       <snippet-edit v-if="showSnippet == 'edit'"></snippet-edit>
       <snippet-new v-if="showSnippet == 'create'"></snippet-new>
     </div>

@@ -32,7 +32,7 @@ class Api::V1::SnippetsController < Api::BaseController
 
   def snippet_params
     # TODO: it's legacy for core counter_cache issues
-    data = params.require(:snippet).permit(:title, :content, :language, :tabs, label_attributes: [:name])
+    data = params.require(:snippet).permit(:description, label_attributes: [:name], snippet_file_attributes: [:title, :content, :language, :tabs])
     label = data[:label_attributes]['name'].blank? ? nil : Label.find_or_create_by(name: data[:label_attributes]['name'])
     data.except(:label_attributes).merge(label: label)
   end
