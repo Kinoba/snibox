@@ -65,13 +65,21 @@ class BackendService {
 
 class SnippetService extends BackendService {
   save() {
+    let snippet_files_attributes = []
+    this.component.$store.state.labelSnippets.active.snippet_files.forEach((snippet_file, index) => {
+      snippet_files_attributes.push({
+        title: snippet_file.title,
+        content: this.component.$children[0].$children[index].editor.getValue(),
+        language: this.component.$store.state.labelSnippets.edit.language,
+        tabs: this.component.$store.state.labelSnippets.edit.tabs,
+      })
+    })
+
     this.options.data = {
       snippet: {
         id: this.component.snippet.id,
-        title: this.component.$store.state.labelSnippets.edit.title,
-        content: this.component.editor.getValue(),
-        language: this.component.$store.state.labelSnippets.edit.language,
-        tabs: this.component.$store.state.labelSnippets.edit.tabs,
+        description: this.component.snippet.description,
+        snippet_file_attributes: snippet_files_attributes,
         label_attributes: {
           name: this.component.$store.state.labelSnippets.edit.label
         }

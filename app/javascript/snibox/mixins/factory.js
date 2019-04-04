@@ -13,7 +13,7 @@ export default {
             title: '',
             content: '',
             language: 'automatically',
-            tabs: 4,  
+            tabs: 4,
           }]
         }
       }

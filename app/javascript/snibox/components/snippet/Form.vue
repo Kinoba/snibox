@@ -13,12 +13,17 @@
           </div>
 
           <div class="control">
-            <button class="button is-primary" @click="addFile">Add file</button>
+            <button class="button is-primary" @click="addFile($store.state.snippets.indexOf(snippet), $event)">Add file</button>
           </div>
         </div>
 
-        <div class="field">
-          <snippet-file-form />
+        <div
+          class="field"
+          v-for="(snippet_file, index) in snippetFiles"
+        >
+          <snippet-file-form
+            :index="index"
+          />
         </div>
 
         <div class="field is-horizontal">
@@ -71,38 +76,6 @@
     },
 
     computed: {
-      editSnippetTitle: {
-        get() {
-          return this.$store.state.labelSnippets.edit.title
-        },
-
-        set(value) {
-          this.$store.commit('setLabelSnippetEditTitle', value)
-        }
-      },
-
-      editSnippetLanguage: {
-        get() {
-          return this.$store.state.labelSnippets.edit.language
-        },
-
-        set(value) {
-          this.$store.commit('setLabelSnippetEditLanguage', value)
-          this.editor.setOption('mode', processEditorMode(value))
-        }
-      },
-
-      editSnippetTabs: {
-        get() {
-          return this.$store.state.labelSnippets.edit.tabs
-        },
-
-        set(value) {
-          this.$store.commit('setLabelSnippetEditTabs', value)
-          this.editor.setOption('tabSize', value)
-        }
-      },
-
       editSnippetLabel: {
         get() {
           return this.$store.state.labelSnippets.edit.label
@@ -115,13 +88,17 @@
 
       snippet() {
         return this.$store.state.labelSnippets.active
+      },
+
+      snippetFiles() {
+        return this.snippet.snippet_files
       }
     },
 
     methods: {
-      addFile(e) {
+      addFile(snippetIndex, e) {
         e.preventDefault();
-        this.$store.commit('addSnippetFile', null)
+        this.$store.commit('addSnippetFile', snippetIndex)
       },
 
       submitAction(e) {

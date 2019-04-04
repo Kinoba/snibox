@@ -39,25 +39,6 @@
           </div>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-body">
-            <div class="field">
-              <div class="control is-expanded">
-                <input id="snippet-labels" class="input" type="text" placeholder="Label" v-model="editSnippetLabel">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-grouped form-footer">
-          <div class="control">
-            <button class="button is-primary" @click="submitAction">{{ action | capitalize}}</button>
-          </div>
-          <div class="control">
-            <button class="button is-text" @click="cancelAction">Cancel</button>
-          </div>
-        </div>
-
       </form>
     </div>
   </card>
@@ -75,7 +56,7 @@
   import { processEditorMode } from '../../utils/editor_helper'
 
   export default {
-    props: ['title', 'action'],
+    props: ['title', 'action', 'index'],
 
     components: {Card},
 
@@ -90,43 +71,36 @@
     computed: {
       editSnippetTitle: {
         get() {
-          return this.$store.state.labelSnippets.edit.title
+          return this.snippet.snippet_files[this.index].title
         },
 
         set(value) {
-          this.$store.commit('setLabelSnippetEditTitle', value)
+          let index = this.index
+          this.$store.commit('setLabelSnippetEditTitle', {index, value})
         }
       },
 
       editSnippetLanguage: {
         get() {
-          return this.$store.state.labelSnippets.edit.language
+          return this.snippet.snippet_files[this.index].language
         },
 
         set(value) {
-          this.$store.commit('setLabelSnippetEditLanguage', value)
+          let index = this.index
+          this.$store.commit('setLabelSnippetEditLanguage', {index, value})
           this.editor.setOption('mode', processEditorMode(value))
         }
       },
 
       editSnippetTabs: {
         get() {
-          return this.$store.state.labelSnippets.edit.tabs
+          return this.snippet.snippet_files[this.index].tabs
         },
 
         set(value) {
-          this.$store.commit('setLabelSnippetEditTabs', value)
+          let index = this.index
+          this.$store.commit('setLabelSnippetEditTabs', {index, value})
           this.editor.setOption('tabSize', value)
-        }
-      },
-
-      editSnippetLabel: {
-        get() {
-          return this.$store.state.labelSnippets.edit.label
-        },
-
-        set(value) {
-          this.$store.commit('setLabelSnippetEditLabel', value)
         }
       },
 
