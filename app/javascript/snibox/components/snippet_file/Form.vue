@@ -1,8 +1,18 @@
 <template>
 
-  <card id="snippet-form" class="animated">
+  <card id="snippet-file-form" class="animated">
     <header class="card-header" slot="card-header">
       <p class="card-header-title" v-html="title"></p>
+      <div class="card-header-icon">
+        <a
+          id="snippet-delete"
+          class="button is-outlined is-small is-danger"
+          :disabled="this.snippet.snippet_files.length === 1"
+          @click="destroySnippet(index, $event)">
+          <icon type="trashcan"></icon>
+          <span>Delete</span>
+        </a>
+      </div>
     </header>
 
     <div class="card-content" slot="card-content">
@@ -53,12 +63,13 @@
   import '../../utils/codemirror_modes'
   import Editor from '../../mixins/editor'
   import Filters from '../../mixins/filters'
+  import Icon from '../Icon.vue'
   import { processEditorMode } from '../../utils/editor_helper'
 
   export default {
     props: ['title', 'action', 'index'],
 
-    components: {Card},
+    components: {Card, Icon},
 
     mixins: [Editor, Filters],
 
@@ -114,6 +125,14 @@
     },
 
     methods: {
+      destroySnippet(snippetIndex, e) {
+        e.preventDefault();
+
+        if (this.snippet.snippet_files.length > 1) {
+          this.$store.commit('removeSnippetFile', snippetIndex)
+        }
+      },
+
       submitAction(e) {
         e.preventDefault()
         Backend.snippet[this.action](this)

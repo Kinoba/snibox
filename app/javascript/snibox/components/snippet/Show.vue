@@ -2,7 +2,7 @@
 
   <div id="show-snippet" class="animated">
     <header class="card-header" slot="card-header">
-      <p class="card-header-title" v-html="snippet.description"></p>
+      <p class="card-header-title no-wrap" v-html="snippet.description"></p>
 
       <div class="card-header-icon" v-if="snippet.id">
         <a id="snippet-edit" class="button is-outlined is-small" @click="editSnippet">
@@ -60,7 +60,7 @@
 
       destroySnippet() {
         Notifications.confirm(
-            "Are you really want to delete snippet " +
+            "Are you really sure you want to delete snippet " +
             "<span class='has-text-weight-bold is-italic'>" +
             this.snippet.description +
             "</span>?",

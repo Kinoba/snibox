@@ -2,18 +2,14 @@
 
   <card id="snippet-form" class="animated">
     <header class="card-header" slot="card-header">
-      <p class="card-header-title" v-html="title"></p>
+      <p class="card-header-title no-wrap" v-html="title"></p>
     </header>
 
     <div class="card-content" slot="card-content">
       <form action="/" @submit="submitAction">
         <div class="field is-horizontal">
-          <div :style="{maxHeight: editorHeight}">
+          <div class="editor no-height no-border">
             <textarea class="file textarea" placeholder="What is your snippet about?" v-model="editSnippetDescription">{{ snippet.description }}</textarea>
-          </div>
-
-          <div class="control">
-            <button class="button is-primary" @click="addFile($store.state.snippets.indexOf(snippet), $event)">Add file</button>
           </div>
         </div>
 
@@ -25,6 +21,10 @@
             :index="index"
             :title="snippetFile.title"
           />
+
+          <div class="control center">
+            <button class="button is-primary" @click="addFile($store.state.snippets.indexOf(snippet), $event)">Add snippet file</button>
+          </div>
         </div>
 
         <div class="field is-horizontal">

@@ -21,11 +21,12 @@
         </div>
       </div>
       <div class="card-header-icon" v-if="snippetFile.id">
-        <a id="snippet-edit" class="button is-outlined is-small" @click="editSnippet">
-          <icon type="pencil"></icon>
-          <span>Edit</span>
-        </a>
-        <a id="snippet-delete" class="button is-outlined is-small is-danger" @click="destroySnippet">
+        <a
+          id="snippet-delete"
+          class="button is-outlined is-small is-danger"
+          :disabled="this.snippet.snippet_files.length === 1"
+          @click="destroySnippet"
+        >
           <icon type="trashcan"></icon>
           <span>Delete</span>
         </a>
@@ -111,14 +112,13 @@
     },
 
     methods: {
-      editSnippet(e) {
-        e.preventDefault()
-        this.$store.commit('setSnippetMode', 'edit')
-      },
-
       destroySnippet() {
+        if (this.snippet.snippet_files.length === 1) {
+          return;
+        }
+
         Notifications.confirm(
-            "Are you really want to delete snippet " +
+            "Are you really sure you want to delete snippet file " +
             "<span class='has-text-weight-bold is-italic'>" +
             this.snippetFile.title +
             "</span>?",
