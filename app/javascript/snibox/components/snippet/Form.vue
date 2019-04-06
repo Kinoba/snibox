@@ -9,7 +9,7 @@
       <form action="/" @submit="submitAction">
         <div class="field is-horizontal">
           <div :style="{maxHeight: editorHeight}">
-            <textarea class="file textarea" placeholder="What is your snippet about?">{{ snippet.description }}</textarea>
+            <textarea class="file textarea" placeholder="What is your snippet about?" v-model="editSnippetDescription">{{ snippet.description }}</textarea>
           </div>
 
           <div class="control">
@@ -19,10 +19,11 @@
 
         <div
           class="field"
-          v-for="(snippet_file, index) in snippetFiles"
+          v-for="(snippetFile, index) in snippetFiles"
         >
           <snippet-file-form
             :index="index"
+            :title="snippetFile.title"
           />
         </div>
 
@@ -76,6 +77,16 @@
     },
 
     computed: {
+      editSnippetDescription: {
+        get() {
+          return this.snippet.description
+        },
+
+        set(value) {
+          this.$store.commit('setSnippetDescription', value)
+        }
+      },
+
       editSnippetLabel: {
         get() {
           return this.$store.state.labelSnippets.edit.label

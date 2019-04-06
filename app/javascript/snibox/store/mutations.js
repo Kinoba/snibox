@@ -1,6 +1,10 @@
 import StoreHelpers from './helpers'
 
 export default {
+  setSnippetDescription(state, value) {
+    state.labelSnippets.active.description = value
+  },
+
   setLabelEditName(state, value) {
     state.labels.edit.name = value
   },
@@ -71,5 +75,9 @@ export default {
       language: 'automatically',
       tabs: 4,
     })
+  },
+
+  removeSnippetFile(state, snippetIndex) {
+    state.labelSnippets.active.snippet_files.splice(snippetIndex, 1)
   }
 }

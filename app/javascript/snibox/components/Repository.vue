@@ -9,13 +9,7 @@
     </div>
 
     <div class="main">
-      <!-- <div
-        v-for="(snippet, index) in [1, 2, 3]"
-        :key="index"
-      > -->
-        <snippet-show v-if="showSnippet == 'show'"></snippet-show>
-      <!-- </div> -->
-
+      <snippet-show v-if="showSnippet == 'show'"></snippet-show>
       <snippet-edit v-if="showSnippet == 'edit'"></snippet-edit>
       <snippet-new v-if="showSnippet == 'create'"></snippet-new>
     </div>
@@ -41,6 +35,10 @@
     computed: {
       showSnippet() {
         return this.$store.state.labelSnippets.mode
+      },
+
+      snippet() {
+        return this.$store.state.labelSnippets.active
       }
     },
 

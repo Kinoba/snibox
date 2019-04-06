@@ -68,10 +68,11 @@ class SnippetService extends BackendService {
     let snippet_files_attributes = []
     this.component.$store.state.labelSnippets.active.snippet_files.forEach((snippet_file, index) => {
       snippet_files_attributes.push({
+        id: snippet_file.id || null,
         title: snippet_file.title,
         content: this.component.$children[0].$children[index].editor.getValue(),
-        language: this.component.$store.state.labelSnippets.edit.language,
-        tabs: this.component.$store.state.labelSnippets.edit.tabs,
+        language: snippet_file.language,
+        tabs: snippet_file.tabs,
       })
     })
 
@@ -79,7 +80,7 @@ class SnippetService extends BackendService {
       snippet: {
         id: this.component.snippet.id,
         description: this.component.snippet.description,
-        snippet_file_attributes: snippet_files_attributes,
+        snippet_files_attributes: snippet_files_attributes,
         label_attributes: {
           name: this.component.$store.state.labelSnippets.edit.label
         }
@@ -93,6 +94,23 @@ class SnippetService extends BackendService {
   destroy() {
     super.destroy(response => {
       this.component.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
+    })
+  }
+
+  destroy_snippet_file() {
+    super.destroy(response => {
+      if (this.component.$store.state.labelSnippets.active.snippet_files.length === 0) {
+        this.component.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
+      } else {
+        console.log(this.component.snippetFile.id);
+        this.component.$store.state.labelSnippets.active.snippet_files.forEach((snippet_file, index) => {
+          console.log(snippet_file.id);
+          if (snippet_file.id === this.component.snippetFile.id) {
+            this.component.$store.commit('removeSnippetFile', index)
+            console.log('found it');
+          }
+        })
+      }
     })
   }
 }
@@ -149,6 +167,18 @@ export default {
       }
 
       new SnippetService(component, options).destroy()
+    },
+
+    destroy_snippet_file(component, snippet_file_id) {
+      let options = {
+        path: '/api/v1/snippets/:id/destroy/:snippet_file'.replace(':id', component.snippet.id).replace(':snippet_file', snippet_file_id),
+        messages: {
+          success: 'Snippet file removed!',
+          error: 'Unable to delete snippet file.'
+        }
+      }
+
+      new SnippetService(component, options).destroy_snippet_file()
     }
   },
 

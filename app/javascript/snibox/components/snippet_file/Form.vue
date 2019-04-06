@@ -35,7 +35,7 @@
 
         <div class="field">
           <div class="editor" :style="{maxHeight: editorHeight}">
-            <textarea class="file textarea" placeholder="Paste a snippet of code">{{ snippet.content }}</textarea>
+            <textarea class="file textarea" placeholder="Paste a snippet of code">{{ snippetFile.content }}</textarea>
           </div>
         </div>
 
@@ -71,7 +71,7 @@
     computed: {
       editSnippetTitle: {
         get() {
-          return this.snippet.snippet_files[this.index].title
+          return this.snippetFile.title
         },
 
         set(value) {
@@ -82,7 +82,7 @@
 
       editSnippetLanguage: {
         get() {
-          return this.snippet.snippet_files[this.index].language
+          return this.snippetFile.language
         },
 
         set(value) {
@@ -94,7 +94,7 @@
 
       editSnippetTabs: {
         get() {
-          return this.snippet.snippet_files[this.index].tabs
+          return this.snippetFile.tabs
         },
 
         set(value) {
@@ -106,6 +106,10 @@
 
       snippet() {
         return this.$store.state.labelSnippets.active
+      },
+
+      snippetFile() {
+        return this.snippet.snippet_files[this.index]
       }
     },
 

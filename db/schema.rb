@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2019_04_01_062316) do
 
   create_table "labels", force: :cascade do |t|
     t.string "name"
-    t.integer "snippets_count", default: 0
+    t.integer "snippets_count", default: 0, null: false
     t.index ["name"], name: "index_labels_on_name", unique: true
   end
 
@@ -33,10 +33,6 @@ ActiveRecord::Schema.define(version: 2019_04_01_062316) do
   end
 
   create_table "snippets", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
-    t.string "language"
-    t.integer "tabs", limit: 2
     t.bigint "label_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
