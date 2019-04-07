@@ -1,6 +1,6 @@
 <template>
 
-  <card id="show-snippet" class="animated">
+  <card :id="`show-snippet-${index}`" class="animated">
     <header class="card-header" slot="card-header">
       <div class="flex-container" :class="{ 'with-markdown': isMarkdown }">
         <div class="card-header-title with-text-overflow">
@@ -9,11 +9,11 @@
         <div class="card-header-title" v-if="snippetFile.id">
           <div class="field" :class="{ 'has-addons': !isMarkdown }">
             <p class="control">
-              <a id="snippet-raw" class="button is-outlined is-small" :href="linkRaw"
+              <a :id="`snippet-raw-${index}`" class="button is-outlined is-small" :href="linkRaw"
                  target="_blank"><span>Raw</span></a>
             </p>
             <p class="control" v-if="!isMarkdown">
-              <a id="snippet-copy" class="button is-outlined is-small" :data-clipboard-target="`#code-${index}`">
+              <a :id="`snippet-copy-${index}`" class="button is-outlined is-small" :data-clipboard-target="`#code-${index}`">
                 <icon class="icon-clippy" type="clippy"></icon>
                 <span>Copy</span></a>
             </p>
@@ -22,7 +22,7 @@
       </div>
       <div class="card-header-icon" v-if="snippetFile.id">
         <a
-          id="snippet-delete"
+          :id="`snippet-delete-${index}`"
           class="button is-outlined is-small is-danger"
           :disabled="this.snippet.snippet_files.length === 1"
           @click="destroySnippet"

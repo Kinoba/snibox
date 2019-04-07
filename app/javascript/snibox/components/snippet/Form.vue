@@ -9,7 +9,7 @@
       <form action="/" @submit="submitAction">
         <div class="field is-horizontal">
           <div class="editor no-height no-border">
-            <textarea class="file textarea" placeholder="What is your snippet about?" v-model="editSnippetDescription">{{ snippet.description }}</textarea>
+            <textarea name="description" class="file textarea" placeholder="What is your snippet about?" v-model="editSnippetDescription">{{ snippet.description }}</textarea>
           </div>
         </div>
 
@@ -19,7 +19,7 @@
         >
           <snippet-file-form
             :index="index"
-            :title="snippetFile.title"
+            :title="snippetFile.title || 'New snippet file'"
           />
 
           <div class="control center">

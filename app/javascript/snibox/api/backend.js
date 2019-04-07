@@ -99,18 +99,7 @@ class SnippetService extends BackendService {
 
   destroy_snippet_file() {
     super.destroy(response => {
-      if (this.component.$store.state.labelSnippets.active.snippet_files.length === 0) {
-        this.component.$store.commit('setActiveLabelSnippet', Factory.methods.factory().snippet)
-      } else {
-        console.log(this.component.snippetFile.id);
-        this.component.$store.state.labelSnippets.active.snippet_files.forEach((snippet_file, index) => {
-          console.log(snippet_file.id);
-          if (snippet_file.id === this.component.snippetFile.id) {
-            this.component.$store.commit('removeSnippetFile', index)
-            console.log('found it');
-          }
-        })
-      }
+      this.component.$store.commit('setActiveLabelSnippet', response.data.entity)
     })
   }
 }

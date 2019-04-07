@@ -5,10 +5,7 @@ class Api::V1::SnippetsController < Api::BaseController
   before_action :set_snippet_file, only: [:raw, :destroy_snippet_file]
 
   def create
-    p "------"
     @snippet = Snippet.new(snippet_params)
-    p @snippet
-    p @snippet.snippet_files
     completed = @snippet.save
     render json: entity_save_data(@snippet, completed)
   end
@@ -30,8 +27,7 @@ class Api::V1::SnippetsController < Api::BaseController
 
   def destroy_snippet_file
     @snippet_file.destroy
-    data = { completed: true }
-    render json: data
+    render json: entity_save_data(@snippet, true)
   end
 
   private

@@ -1,11 +1,11 @@
 <template>
 
-  <card id="snippet-file-form" class="animated">
+  <card :id="`snippet-file-form-${index}`" class="animated">
     <header class="card-header" slot="card-header">
       <p class="card-header-title" v-html="title"></p>
       <div class="card-header-icon">
         <a
-          id="snippet-delete"
+          :id="`snippet-delete-${index}`"
           class="button is-outlined is-small is-danger"
           :disabled="this.snippet.snippet_files.length === 1"
           @click="destroySnippet(index, $event)">
@@ -21,7 +21,7 @@
           <div class="field-body">
             <div class="field">
               <div class="control is-expanded">
-                <input id="title" class="input" type="text" placeholder="Title" v-model="editSnippetTitle">
+                <input :id="`title-${index}`" class="input" type="text" placeholder="Title" v-model="editSnippetTitle">
               </div>
             </div>
             <div class="field is-grouped is-grouped-right">
