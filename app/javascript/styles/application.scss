@@ -89,6 +89,11 @@ pre {
   }
 }
 
+[id^=snippet-file-form-] {
+  border: 1px solid $border-color;
+  margin-bottom: .75em;
+}
+
 .menu-top {
   @extend .is-marginless;
   background: $white;
@@ -142,7 +147,7 @@ pre {
 
 .editor {
   font-size: $code-size;
-  height: calc(100vh - 272px);
+  height: calc(100vh - 542px);
   min-height: 200px;
   border: 1px solid $border-color;
   width: 100%;
