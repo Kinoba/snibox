@@ -21,6 +21,49 @@ describe 'Snippets', js: true do
       end
       within('#snippets') { expect(page).to have_content('test snippet') }
     end
+
+    it 'adds a snippet file' do
+      create_snippet('test snippet', 'test label')
+
+      sleep 1
+      find('#snippet-edit').click
+      within('#snippet-form') do
+        expect(page).to have_css('#snippet-file-form-0')
+        expect(page).not_to have_css('#snippet-file-form-1')
+
+        click_button('Add snippet file')
+        expect(page).to have_css('#snippet-file-form-1')
+
+        fill_in_snippet_file_title(1, 'my second snippet title')
+        fill_in_editor_field(1)
+        click_on 'Update'
+      end
+
+      expect(page).to have_css('#show-snippet-1')
+    end
+
+    it 'removes a snippet file' do
+      create_snippet('test snippet', 'test label')
+
+      sleep 1
+      find('#snippet-edit').click
+      within('#snippet-form') do
+        click_button('Add snippet file')
+
+        fill_in_snippet_file_title(1, 'my second snippet title')
+        fill_in_editor_field(1)
+        click_on 'Update'
+      end
+
+      within('#show-snippet-1') do
+        find('#snippet-delete-1').click
+      end
+
+      sleep 1
+      click_button('Yes')
+
+      expect(page).not_to have_css('#show-snippet-1')
+    end
   end
 
   context 'show' do
