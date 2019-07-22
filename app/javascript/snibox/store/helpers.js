@@ -23,7 +23,7 @@ export default {
         }
         else {
           commit('setActiveLabel', localActive.labels)
-          snippet.label = localActive.labels
+          snippet.labels = localActive.labels
         }
         commit('setActiveLabelSnippet', snippet)
         commit('setSnippetMode', 'create')
@@ -40,8 +40,10 @@ export default {
       let labels = []
 
       data.snippets.forEach(snippet => {
-        if (!_.isNull(snippet.label.id)) {
-          labels.push(snippet.label)
+        if (!_.isNull(snippet.labels)) {
+          snippet.labels.forEach(label => {
+            labels.push(label)
+          })
         }
       })
 
@@ -98,13 +100,13 @@ export default {
 
     setLabelSnippet: (state) => {
       // ignore active label update for initial and new snippets states
-      if (!state.flags.renderAllSnippets && state.labelSnippets.active.label.id !== -1) {
+      if (!state.flags.renderAllSnippets && !_.some(state.labelSnippets.active.labels, {id: -1})) {
         localStorage.setItem('labels_active', JSON.stringify(state.labelSnippets.active.label))
         state.labels.active = state.labelSnippets.active.label
       }
 
       // for the case if current active label has been destroyed by snippet reset state to default
-      if (state.labelSnippets.active.label.id === -1) {
+      if (_.some(state.labelSnippets.active.labels, {id: -1})) {
         if (!_.find(state.labels.items, {id: state.labels.active.id})) {
           localStorage.removeItem('labels_active')
           state.labels.active = {}
@@ -119,7 +121,7 @@ export default {
       // state.labelSnippets.edit = Object.assign({}, state.labelSnippets.active)
       // https://scotch.io/bar-talk/copying-objects-in-javascript#toc-deep-copying-objects
       state.labelSnippets.edit = JSON.parse(JSON.stringify(state.labelSnippets.active))
-      state.labelSnippets.edit.label = state.labelSnippets.active.label.name
+      state.labelSnippets.edit.label = state.labelSnippets.active.labels
     }
   }
 }
