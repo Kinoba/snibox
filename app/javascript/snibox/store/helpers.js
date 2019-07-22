@@ -40,11 +40,11 @@ export default {
       let labels = []
 
       data.snippets.forEach(snippet => {
-        if (!_.isNull(snippet.labels)) {
-          snippet.labels.forEach(label => {
+        snippet.labels.forEach(label => {
+          if (!_.isNull(label.id)) {
             labels.push(label)
-          })
-        }
+          }
+        })
       })
 
       if (labels.length) {
