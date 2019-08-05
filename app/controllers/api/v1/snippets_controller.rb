@@ -12,7 +12,7 @@ class Api::V1::SnippetsController < Api::BaseController
   end
 
   def update
-    completed = @snippet.update(snippet_params)
+    completed = @snippet.update(snippet_params.except(:label_attributes))
     render json: entity_save_data(@snippet, completed)
   end
 
