@@ -13,6 +13,7 @@ class Api::V1::SnippetsController < Api::BaseController
 
   def update
     completed = @snippet.update(snippet_params.except(:label_attributes))
+    find_label(snippet_params)
     render json: entity_save_data(@snippet, completed)
   end
 
@@ -40,10 +41,24 @@ class Api::V1::SnippetsController < Api::BaseController
     labels = data[:label_attributes]['name'].split(',')
     return if labels.nil?
     labels.each { |label|
-      @label = Label.find_or_create_by(name: label.strip.upcase)
-      @labeling = @label.labelings.build(snippet: @snippet)
-      @labeling.save
+      @label = Label.find_by(name: label.strip.upcase)
+      @label.labelings.build(snippet: @snippet).save if @label.present? && !@label.labelings.find_by(snippet_id: @snippet)
+      Label.create(name: label.strip.upcase).labelings.build(snippet: @snippet).save if @label.nil?
     }
+    delete_unused_label(labels)
+  end
+
+  def delete_unused_label(labels)
+    snippet_labels = [];
+    @snippet.labels.each { |label| snippet_labels << label.name }
+    labels_difference = snippet_labels - labels
+    if labels_difference.length > 0
+      labels_difference.each do |diff|
+        to_delete_label = Label.find_by(name: diff)
+        Labeling.where(label_id: to_delete_label.id).find_by(snippet_id: @snippet.id).destroy
+        to_delete_label.destroy if to_delete_label.snippets_count <= 1
+      end
+    end
   end
 
   def snippet_params
