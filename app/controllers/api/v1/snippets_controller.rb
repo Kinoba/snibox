@@ -38,14 +38,16 @@ class Api::V1::SnippetsController < Api::BaseController
   end
 
   def find_label(data)
+    labels_array = []
     labels = data[:label_attributes]['name'].split(',')
     return if labels.nil?
     labels.each { |label|
+      labels_array << label.strip.upcase
       @label = Label.find_by(name: label.strip.upcase)
-      @label.labelings.build(snippet: @snippet).save if @label.present? && !@label.labelings.find_by(snippet_id: @snippet)
       Label.create(name: label.strip.upcase).labelings.build(snippet: @snippet).save if @label.nil?
+      @label.labelings.build(snippet: @snippet).save if @label.present? && !@label.labelings.find_by(snippet_id: @snippet)
     }
-    delete_unused_label(labels)
+    delete_unused_label(labels_array)
   end
 
   def delete_unused_label(labels)
