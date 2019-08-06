@@ -15,7 +15,6 @@ export default {
         labels: JSON.parse(localstorage_label),
         labelSnippets: _.mapKeys(JSON.parse(localStorage.getItem('label_snippets_active')) || {}, (v, k) => _.camelCase(k)),
       }
-      console.log(localActive.labels);
       if (_.isEmpty(localActive.labels)) {
         commit('setRenderAllSnippetsFlag', true)
       }
@@ -124,9 +123,14 @@ export default {
     createEditableSnippetCopy: (state) => {
       // state.labelSnippets.edit = Object.assign({}, state.labelSnippets.active)
       // https://scotch.io/bar-talk/copying-objects-in-javascript#toc-deep-copying-objects
-      if (typeof state.labelSnippets.active.labels.id !== 'undefined') {
+      state.labelSnippets.edit = JSON.parse(JSON.stringify(state.labelSnippets.active))
+      if (state.labelSnippets.edit.id !== null ) {
         let labels = [];
-        state.labelSnippets.edit = JSON.parse(JSON.stringify(state.labelSnippets.active))
+        state.labelSnippets.active.labels.forEach(function(label) {
+          labels.push(label.name)
+        });
+        state.labelSnippets.edit.label = labels
+      } else {
         state.labelSnippets.edit.label = state.labelSnippets.active.labels.name
       }
     }
