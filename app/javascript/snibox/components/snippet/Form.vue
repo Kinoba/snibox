@@ -35,12 +35,12 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Label</label>
+            <label class="label">Labels</label>
           </div>
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input id="snippet-labels" class="input" type="text" v-model="editSnippetLabel">
+                <input id="snippet-labels" class="input" type="text" v-model="editSnippetLabel" placeholder="separate labels with a comma, for example :    rails , RUBY   ,RUBY on rails">
               </div>
             </div>
           </div>
