@@ -23,11 +23,12 @@
       <p class="card-header-description no-wrap" v-html="snippet.description"></p>
       <br v-if="snippet.description"/>
 
-      <div class='show-snippet-labels' v-if="snippet.labels">
+      <div class='show-snippet-labels' v-if="snippet.labels[0].snippetsCount !== 0">
         <h4>Labels</h4>
         <div v-for="snippetLabel in snippet.labels"> {{snippetLabel.name}} </div>
       </div>
-      <br v-if="snippet.description"/>
+      <br v-if="snippet.labels[0].snippetsCount !== 0"/>
+      
       <p class="is-italic">Files ({{ snippet.snippetFiles.length }})</p>
     </div>
     <p class="card-description no-wrap" v-else>
