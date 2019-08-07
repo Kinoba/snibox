@@ -131,7 +131,7 @@ export default {
         });
         state.labelSnippets.edit.label = labels
       } else {
-        state.labelSnippets.edit.label = state.labelSnippets.active.labels.name
+        state.labelSnippets.edit.label = ''
       }
     }
   }

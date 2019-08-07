@@ -20,6 +20,7 @@ class Api::V1::SnippetsController < Api::BaseController
   def destroy
     Labeling.where(snippet_id: @snippet.id).destroy_all
     Label.where(snippets_count: 0).destroy_all
+    SnippetFile.where(snippet_id: @snippet.id).destroy_all
     @snippet.destroy
     data = { completed: true }
     render json: data
@@ -41,8 +42,8 @@ class Api::V1::SnippetsController < Api::BaseController
 
   def find_label(data)
     labels_array = []
+    return if data[:label_attributes]['name'].nil?
     labels = data[:label_attributes]['name'].split(',')
-    return if labels.nil?
     labels.each { |label|
       labels_array << label.strip.upcase
       @label = Label.find_by(name: label.strip.upcase)
