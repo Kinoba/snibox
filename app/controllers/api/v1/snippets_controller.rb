@@ -18,6 +18,8 @@ class Api::V1::SnippetsController < Api::BaseController
   end
 
   def destroy
+    Labeling.where(snippet_id: @snippet.id).destroy_all
+    Label.where(snippets_count: 0).destroy_all
     @snippet.destroy
     data = { completed: true }
     render json: data
