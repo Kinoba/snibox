@@ -28,8 +28,8 @@
         <div v-for="snippetLabel in snippet.labels"> {{snippetLabel.name}} </div>
       </div>
       <br v-if="snippet.labels[0].snippetsCount !== 0"/>
-      
-      <p class="is-italic">Files ({{ snippet.snippetFiles.length }})</p>
+
+      <p class="is-italic">Files ({{ snippet.snippetFilesCount }}) </p>
     </div>
     <p class="card-description no-wrap" v-else>
       Nothing to show. Select a snippet to view or create the new one!

@@ -143,6 +143,7 @@
       submitAction(e) {
         e.preventDefault()
         Backend.snippet[this.action](this)
+        this.$store.commit('setSnippetMode', 'show')
       },
 
       cancelAction(e) {
