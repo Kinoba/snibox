@@ -16,7 +16,7 @@ describe 'Snippets', js: true do
     it 'tagged snippet' do
       create_snippet('test snippet', 'test description', 'test label')
       within('#labels') do
-        expect(page).to have_content('test label')
+        expect(page).to have_content('TEST LABEL')
         expect(page).to have_content('untagged')
       end
       within('#snippets') { expect(page).to have_content('test snippet') }

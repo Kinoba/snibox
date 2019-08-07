@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Snippet do
   describe '#language_suported' do
-    let(:snippet_valid_description) { build(:snippet_with_tag, title: 'this is a super useful snippet') }
-    let(:snippet_not_valid_title) { build(:snippet_with_tag, title: nil) }
+    let(:snippet_valid_description) { build(:snippet, title: 'this is a super useful snippet') }
+    let(:snippet_not_valid_title) { build(:snippet, title: nil) }
 
     it 'not valid when title isn\'t supported' do
       expect(snippet_not_valid_title).to_not be_valid
