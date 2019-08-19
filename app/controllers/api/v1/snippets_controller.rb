@@ -40,6 +40,7 @@ class Api::V1::SnippetsController < Api::BaseController
     @snippet_file = @snippet.snippet_files.find_by(id: params[:snippet_file])
   end
 
+  # check if label is already used, or if necessary to create one + create labeling (link between label and snippet)
   def find_label(data)
     labels_array = []
     return if data[:label_attributes]['name'].nil?
@@ -53,6 +54,7 @@ class Api::V1::SnippetsController < Api::BaseController
     delete_unused_label(labels_array)
   end
 
+  # remove unused labels and labeling - link with snippet
   def delete_unused_label(labels)
     snippet_labels = [];
     @snippet.labels.each { |label| snippet_labels << label.name }
