@@ -22,6 +22,16 @@ describe 'Snippets', js: true do
       within('#snippets') { expect(page).to have_content('test snippet') }
     end
 
+    it 'multi-tagged snippet' do
+      create_snippet('test snippet', 'test description', 'test label, Test 2')
+      within('#labels') do
+        expect(page).to have_content(/test label/i)
+        expect(page).to have_content(/test 2/i)
+        expect(page).to have_content('untagged')
+      end
+      within('#snippets') { expect(page).to have_content('test snippet') }
+    end
+
     it 'adds a snippet file' do
       create_snippet('test snippet', 'test description', 'test label')
 
