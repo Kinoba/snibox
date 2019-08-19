@@ -63,7 +63,7 @@
 
           <div class="field is-grouped">
             <div class="control">
-              <button class="button is-primary" type="submit" @click="submitAction">{{ action | capitalize}}</button>
+              <button class="button is-primary create-button" type="submit" @click="submitAction">{{ action | capitalize}}</button>
             </div>
             <div class="control">
               <button class="button is-text" type="button" @click="cancelAction">Cancel</button>

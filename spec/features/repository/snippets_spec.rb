@@ -39,6 +39,7 @@ describe 'Snippets', js: true do
         click_on 'Update'
       end
 
+      find('.snippet-name').click
       expect(page).to have_css('#show-snippet-1')
     end
 
@@ -49,12 +50,11 @@ describe 'Snippets', js: true do
       find('#snippet-edit').click
       within('#snippet-form') do
         click_button('Add file')
-
         fill_in_snippet_file_title(1, 'my second snippet title')
         fill_in_editor_field(1)
         click_on 'Update'
       end
-
+      find('.snippet-name').click
       find('#snippet-edit').click
       within('#snippet-form') do
         find('#snippet-delete-1').click
@@ -130,12 +130,12 @@ describe 'Snippets', js: true do
       click_on 'Update'
 
       within('#labels') do
-        expect(page).to have_content('edited label')
-        expect(page).to have_content('untagged')
+        expect(page).to have_content(/edited label/i)
+        expect(page).to have_content(/untagged/i)
       end
-      within('#snippets') { expect(page).to have_content('edited snippet title') }
+      within('#snippets') { expect(page).to have_content(/edited snippet title/i) }
 
-      within('#show-snippet') { expect(page).to have_content('edited snippet description') }
+      within('#show-snippet') { expect(page).to have_content(/edited snippet description/i) }
     end
 
     it 'user callapses a snippet file' do
@@ -158,6 +158,8 @@ describe 'Snippets', js: true do
     fill_in_editor_field(0)
     fill_in 'snippet-labels', with: label unless label.nil?
     click_on 'Create'
+    sleep 1
+    find('.snippet-name').click
   end
 
   def fill_in_editor_field(index)
